@@ -1,0 +1,43 @@
+{
+  "items": [
+    {
+      "title": "uploadtest",
+      "path": "./uploadtest.html",
+      "section": "Logs",
+      "type": "HTML",
+      "date": null,
+      "tags": [
+        "test",
+        "upload"
+      ]
+    },
+    {
+      "title": "trial5",
+      "path": "./trial5.html",
+      "section": "Logs",
+      "type": "HTML",
+      "date": null,
+      "tags": [
+        "trial"
+      ]
+    },
+    {
+      "title": "ObsidianUT",
+      "path": "./ObsidianUT.html",
+      "section": "Logs",
+      "type": "HTML",
+      "date": null,
+      "tags": []
+    },
+    {
+      "title": "2025 09 03 immediate sync test",
+      "path": "./2025-09-03-immediate-sync-test.html",
+      "section": "Logs",
+      "type": "HTML",
+      "date": "2025-09-03",
+      "tags": [
+        "test"
+      ]
+    }
+  ]
+}
