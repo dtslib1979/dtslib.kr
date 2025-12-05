@@ -1,8 +1,10 @@
-# EAE PWA Site
+# DTS Library PWA Site
 
 A fully functional Progressive Web App built with React, Vite, MDX, TailwindCSS, and deployed on GitHub Pages.
 
-**Live Site:** [www.eae.kr](https://www.eae.kr)
+**Live Site:** [https://dtslib1979.github.io/dtslib.com/](https://dtslib1979.github.io/dtslib.com/)
+
+> **Note**: This site is configured for GitHub Pages deployment at the `/dtslib.com/` base path.
 
 ## Tech Stack
 
@@ -79,9 +81,14 @@ A fully functional Progressive Web App built with React, Vite, MDX, TailwindCSS,
 ### GitHub Pages Deployment
 
 - ✅ Automated deployment via GitHub Actions
-- ✅ Custom domain support (www.eae.kr)
+- ✅ Configured for GitHub Pages project site (`/dtslib.com/` base path)
 - ✅ SPA routing support (404.html fallback)
 - ✅ Asset optimization and minification
+- ✅ Custom domain support via CNAME (www.dtslib.com)
+
+**Important Configuration:**
+- `vite.config.js`: `base: '/dtslib.com/'` - Sets correct asset paths for GitHub Pages
+- `src/App.jsx`: `basename="/dtslib.com"` - Configures React Router for correct routing
 
 ## Development
 
