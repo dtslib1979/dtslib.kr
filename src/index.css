@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-slate-50;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-slate-50;
+  }
+}
+
+/* PARKSY WORLD Chalkboard Global Theme */
+:root {
+  /* 1. Core Base – 네가 사랑한 원조 초록 */
+  --parksy-chalk-base: #253A2F;
+
+  /* 2. Realistic Stone Grain (은은한 돌 입자감) */
+  --parksy-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='parksy-noise-filter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23parksy-noise-filter)' opacity='0.09'/%3E%3C/svg%3E");
+
+  /* 3. Subtle Greenish Scratches (오래된 고급 석판에만 있는 흔적) */
+  --parksy-scratch: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='parksy-scratch-pattern' width='800' height='800'%3E%3Cpath d='M0,400 Q300,50 600,400 T800,400' stroke='%2355B08A' stroke-width='0.8' opacity='0.018'/%3E%3Cpath d='M400,0 Q50,350 400,800' stroke='%2340A57A' stroke-width='0.6' opacity='0.012'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23parksy-scratch-pattern)'/%3E%3C/svg%3E");
+
+  /* 4. Chalk Dust Lighting (중앙에 닳은 분필 자국 느낌) */
+  --parksy-dust-light: radial-gradient(circle at 48% 45%, rgba(220, 245, 225, 0.11) 0%, transparent 65%);
+
+  /* 5. Deep Vignette (화면이 석판 안으로 빨려 들어가는 핵심 효과) */
+  --parksy-vignette: inset 0 0 180px 70px rgba(0,0,0,0.8);
+
+  /* Typography colors for dark mode */
+  --fg: rgba(255,255,255,0.95); /* main headings stay strong */
+  --fg-soft: rgba(255,255,255,0.25); /* body = new target (25%) */
+  --fg-softer: rgba(255,255,255,0.18); /* tertiary */
+  --accent: #fbbf24; /* amber-400 - code and highlights */
+  --accent-hover: #fcd34d; /* amber-300 - hover state for links */
+  --soft: #475569; /* slate-600 - borders and subtle elements */
+
+  /* Chalkboard text hierarchy */
+  --chalk-fg-strong: #F3F7F4;  /* headings, key labels (거의 흰색이지만 살짝 눌린 톤) */
+  --chalk-fg-body:   rgba(255,255,255,0.25);  /* 본문 텍스트용, 25% gray target */
+  --chalk-fg-muted:  rgba(255,255,255,0.18);  /* 캡션, 메타 정보 */
+}
+
+/* 전체 배경 레이어 – 이 클래스만 body나 메인 컨테이너에 주면 끝 */
+.parksy-chalkboard {
+  position: fixed;
+  inset: 0;
+  background:
+    var(--parksy-noise),
+    var(--parksy-dust-light),
+    var(--parksy-scratch),
+    var(--parksy-chalk-base);
+  background-size: 180px 180px, cover, cover, cover;
+  background-blend-mode: overlay, soft-light, overlay, normal;
+  box-shadow: var(--parksy-vignette);
+  filter: contrast(112%) brightness(92%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 타이틀 텍스트 – PARKSY WORLD 메인 문구용 */
+.parksy-title {
+  font-family: "Annie Use Your Telescope", cursive;
+  font-weight: 700;
+  font-size: clamp(3rem, 9vw, 6rem);
+  line-height: 1;
+  color: transparent;
+  background: var(--parksy-noise);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 3px 4px 8px rgba(0,0,0,0.7);
+  opacity: 0.97;
+}
+
+/* 본문 텍스트 */
+.parksy-text {
+  font-family: "Courier New", monospace;
+  font-size: clamp(1.05rem, 2.8vw, 1.5rem);
+  line-height: 1.8;
+  color: #EEF8F2;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  opacity: 0.95;
+}
+
+/* 선택사항 – 마우스 따라다니는 분필 가루 효과 (JS로 좌표만 갱신) */
+.parksy-cursor-dust {
+  position: fixed;
+  pointer-events: none;
+  z-index: 5;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(220,255,230,0.09) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+body:hover .parksy-cursor-dust {
+  opacity: 1;
+}
+
+/* 메인 콘텐츠 컨테이너용 유틸 (기존 본문 위에 띄우는 박스 느낌) */
+.parksy-main {
+  position: relative;
+  z-index: 2;
+}
+
+/* Global MDX text styles for dark mode visibility */
+.mdx-content {
+  color: var(--chalk-fg-body);
+}
+
+.mdx-content h1,
+.mdx-content h2,
+.mdx-content h3,
+.mdx-content h4,
+.mdx-content h5,
+.mdx-content h6 {
+  color: var(--chalk-fg-strong);
+}
+
+.mdx-content p,
+.mdx-content li,
+.mdx-content blockquote {
+  color: var(--chalk-fg-body) !important;
+}
+
+.mdx-content small,
+.mdx-content figcaption {
+  color: var(--chalk-fg-muted);
+}
+
+.mdx-content a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.mdx-content a:hover {
+  color: var(--accent-hover);
+}
+
+/* Ensure prose and typography utilities match */
+.prose,
+.markdown-body,
+.text-muted,
+.text-soft {
+  color: rgba(255,255,255,0.25) !important;
+}
+
+/* 코드나 인라인 강조는 살짝 강하게 */
+.mdx-content code {
+  color: var(--chalk-fg-strong);
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+}
+
+.mdx-content pre {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.mdx-content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Hover zoom effect for content blocks */
+.mdx-zoom-target {
+  transition: transform 0.22s ease-out 0.45s;
+  cursor: default;
+}
+
+.mdx-zoom-target:hover {
+  transform: scale(1.03);
+}
+
+/* ===========================================
+   Mermaid Chalkboard × Excalidraw Styling
+   =========================================== */
+
+/* Mermaid 공통 래퍼 – 칠판 위 초크 느낌 */
+.mermaid-chalk svg {
+  width: 100%;
+  height: auto;
+  max-width: 640px;
+  margin: 0 auto;
+  font-family: "Annie Use Your Telescope", "Courier New", monospace;
+  color: #F7FFF5;
+}
+
+/* Remove tap highlight overlay (blue box on mobile) */
+svg, svg * {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* 노드 스타일 - 손그림 박스 + 살짝 거친 느낌 */
+.mermaid-chalk .node rect,
+.mermaid-chalk .node path,
+.mermaid-chalk .label-container {
+  fill: rgba(10, 30, 22, 0.9);         /* 거의 검정에 가까운 녹색 */
+  stroke: #E6F2E8;
+  stroke-width: 2.2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* 손그림 느낌 */
+  stroke-dasharray: 3 2;
+}
+
+/* 텍스트 – 항상 잘 보이게 */
+.mermaid-chalk .label,
+.mermaid-chalk .node text,
+.mermaid-chalk text {
+  fill: #F7FFF5 !important;
+  font-size: 0.8rem;
+}
+
+/* 엣지(화살표) - 초크로 긋는 선 느낌 */
+.mermaid-chalk .edgePath path {
+  stroke: #E6F2E8;
+  stroke-width: 1.8px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 3 3;
+}
+
+/* 화살표 마커 */
+.mermaid-chalk .marker {
+  fill: #E6F2E8;
+  stroke: #E6F2E8;
+}
+
+/* 엣지 레이블 배경 */
+.mermaid-chalk .edgeLabel rect {
+  fill: #253A2F;
+  stroke: #E6F2E8;
+  stroke-width: 1.5px;
+}
+
+.mermaid-chalk .edgeLabel span {
+  color: #F7FFF5;
+}
+
+/* 전체 hover 시 살짝 강조 */
+.mermaid-chalk {
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.45));
+  transition: transform 0.25s ease-out, filter 0.25s ease-out;
+}
+
+.mermaid-chalk:hover {
+  transform: translateY(-4px) scale(1.01);
+  filter: drop-shadow(0 0 14px rgba(0, 0, 0, 0.65));
+}
+
+/* 개별 노드 hover 강조 */
+.mermaid-chalk .node:hover rect,
+.mermaid-chalk .node:hover path {
+  fill: rgba(20, 60, 45, 0.95);
+}
+
+.mermaid-chalk .node:hover text {
+  fill: #FFFFFF !important;
+}
+
+/* 클러스터/서브그래프 스타일링 */
+.mermaid-chalk .cluster rect {
+  fill: rgba(10, 30, 22, 0.5);
+  stroke: #E6F2E8;
+  stroke-width: 1.8px;
+  stroke-dasharray: 5 3;
+}
+
+.mermaid-chalk .cluster text {
+  fill: #F7FFF5 !important;
+}
+
+/* 모바일에서도 글씨가 안 뭉개지도록 */
+@media (max-width: 640px) {
+  .mermaid-chalk .label,
+  .mermaid-chalk .node text {
+    font-size: 0.75rem;
+  }
+  
+  .mermaid-chalk svg {
+    max-width: 100%;
+  }
+}
+
+/* ===========================================
+   Invisible Scroll Zones (Top / Bottom)
+   Z-index hierarchy: nav (200) > main (150) > scroll zones (100)
+   =========================================== */
+
+/* Invisible scroll zones (top / bottom) */
+.scroll-zone {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 100;  /* Below nav and main content to allow interactions */
+  background: transparent;     /* Completely transparent */
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+
+/* Top touch zone (scroll to top) */
+.scroll-zone-top {
+  top: 0;
+  height: 40vh;                /* Top 40% of viewport */
+}
+
+/* Bottom touch zone (scroll to bottom) */
+.scroll-zone-bottom {
+  bottom: 0;
+  height: 40vh;                /* Bottom 40% of viewport */
+}
+
+/* ===========================================
+   Theory Diagram Styling
+   =========================================== */
+
+/* Diagram container - centering and alignment */
+.theory-diagram {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SVG and image sizing - responsive */
+.theory-diagram svg,
+.theory-diagram img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* SVG text styling - bright yellow with glow effect */
+.theory-diagram svg text {
+  fill: #ffe08a; /* Visible yellow color */
+  /* Responsive font size - large on all screens */
+  font-size: clamp(14px, 2.8vw, 20px);
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.8);
+  stroke-width: 0.8px;
+
+  /* Glowing effect */
+  filter: drop-shadow(0 0 4px rgba(255, 224, 138, 0.85));
+}
