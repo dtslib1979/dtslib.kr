@@ -5,7 +5,7 @@
 
 export const CATEGORIES = [
   { 
-    slug: 'eae-blueprint', 
+    slug: 'dts-blueprint', 
     name: '🏗️ DTS Blueprint', 
     icon: '🏗️',
     // YouTube video for DTS Blueprint category card
