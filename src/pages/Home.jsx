@@ -14,8 +14,8 @@ export default function Home() {
       {/* Hero YouTube Video */}
       <div className="mb-12 max-w-4xl mx-auto">
         <YouTubeEmbed 
-          url="https://youtu.be/6T3mibse3Q4?si=oPQKtEXc_Gxk_t6d"
-          title="DTS Library Hero Video"
+          url="https://www.youtube.com/embed/SRkRmx4G5Gc?rel=0&autoplay=1&mute=1&loop=1&playlist=SRkRmx4G5Gc"
+          title="Parksy Hero Video"
         />
       </div>
       
