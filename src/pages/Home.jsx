@@ -11,6 +11,14 @@ export default function Home() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-slate-50">Dimas × Thomas × Sancho × Library</h1>
       
+      {/* Hero YouTube Video */}
+      <div className="mb-12 max-w-4xl mx-auto">
+        <YouTubeEmbed 
+          url="https://youtu.be/6T3mibse3Q4?si=oPQKtEXc_Gxk_t6d"
+          title="DTS Library Hero Video"
+        />
+      </div>
+      
       {/* Categories Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {CATEGORIES.map(category => (
