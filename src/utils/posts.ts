@@ -62,18 +62,29 @@ function parseFrontmatter(module: MDXModule) {
 // Get all posts
 export function getAllPosts() {
   const posts = Object.entries(modules).map(([path, module]) => {
-    const slug = path.split('/').pop().replace('.mdx', '');
-    const category = path.split('/').slice(-2, -1)[0];
+    const slug = path.split('/').pop()?.replace('.mdx', '') ?? '';
+    const folderCategory = path.split('/').slice(-2, -1)[0] ?? '';
+
+    const fm = parseFrontmatter(module);
+
+    // 1) frontmatter.category 우선
+    // 2) 없으면 폴더명 사용
+    const resolvedCategory =
+      fm.category && String(fm.category).trim().length > 0
+        ? String(fm.category).trim()
+        : folderCategory;
+
     return {
       slug,
-      category,
       path,
-      ...parseFrontmatter(module),
+      ...fm,
+      category: resolvedCategory,
     };
   });
 
-  // Sort by date descending
-  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return posts.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 }
 
 // Get all published posts (filters out unpublished posts and future posts beyond grace period)
