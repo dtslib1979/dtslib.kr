@@ -1,40 +1,35 @@
-# dtslib.kr
+# dtslib.kr — START HERE
 
-MDX 기반 정적 문서 사이트
+## 이 레포는 뭐냐
+- MDX 문서 생산용 (앱 아님)
+- PWA/SW/manifest 없음 (의도적으로 제거)
+- 브라우저 번역 사용
 
 **Live:** https://dtslib.kr
 
 ---
 
-## 이 사이트로 할 수 있는 것
+## 오늘 할 일 (3줄)
 
-- MDX 문서 작성 및 발행
-- 카테고리별 콘텐츠 관리
-- 브라우저 번역으로 다국어 대응
-
-## 할 수 없는 것 (의도적 제외)
-
-- ❌ PWA 설치
-- ❌ 오프라인 모드
-- ❌ 자체 언어 토글
+1. `src/content/{category}/{slug}.mdx` 추가
+2. `git push origin main`
+3. 배포 확인
 
 ---
 
-## 콘텐츠 추가
+## 금지 (자동 차단됨)
 
-```
-src/content/{카테고리}/{slug}.mdx
-```
+| ❌ 금지 | 이유 |
+|--------|------|
+| 루트에 .md 추가 | README.md만 허용 |
+| vite-plugin-pwa 설치 | 캐시 문제 |
+| workbox 설치 | PWA 금지 |
+| manifest 파일 추가 | PWA 금지 |
+| service worker 코드 | PWA 금지 |
 
-```mdx
+> `npm run build` 시 `repo-guard.mjs`가 자동 검사 → 위반 시 빌드 실패
+
 ---
-title: "제목"
-date: "2025-12-18"
-category: "카테고리명"
----
-
-본문
-```
 
 ## 카테고리
 
@@ -50,13 +45,17 @@ category: "카테고리명"
 
 ---
 
-## 배포
+## MDX 템플릿
 
-```
-main push → GitHub Actions → 자동 배포
-```
+```mdx
+---
+title: "제목"
+date: "2025-12-18"
+category: "카테고리명"
+---
 
-수동 작업 없음.
+본문
+```
 
 ---
 
@@ -65,18 +64,8 @@ main push → GitHub Actions → 자동 배포
 ```bash
 npm install
 npm run dev     # localhost:5173
-npm run build   # dist/ 생성
+npm run build   # guard + vite build
 ```
-
----
-
-## 금지 사항
-
-| ❌ 하지 말 것 | 이유 |
-|--------------|------|
-| 루트에 MD 추가 | docs/ 사용 |
-| PWA 관련 코드 추가 | 캐시 문제 |
-| vite-plugin-pwa 설치 | 의도적 제외 |
 
 ---
 
