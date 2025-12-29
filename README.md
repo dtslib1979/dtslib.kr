@@ -2,8 +2,7 @@
 
 ## 이 레포는 뭐냐
 - MDX 문서 생산용 (앱 아님)
-- PWA 설치 프롬프트 없음 (standalone 금지)
-- 브라우저 UI(주소창) 유지
+- PWA/SW/manifest 없음 (의도적으로 제거)
 - 브라우저 번역 사용
 
 **Live:** https://dtslib.kr
@@ -25,18 +24,10 @@
 | 루트에 .md 추가 | README.md만 허용 |
 | vite-plugin-pwa 설치 | 캐시 문제 |
 | workbox 설치 | PWA 금지 |
-| manifest `display: standalone` | 앱처럼 설치됨 |
+| manifest 파일 추가 | PWA 금지 |
 | service worker 코드 | PWA 금지 |
 
 > `npm run build` 시 `repo-guard.mjs`가 자동 검사 → 위반 시 빌드 실패
-
-### 예외 (2025-12-30 추록)
-
-| ✅ 허용 | 조건 |
-|--------|------|
-| manifest.json | `display: "browser"` 필수 |
-
-> 브라우저 바로가기 추가 시 아이콘 표시용. 주소창 유지됨, PWA 설치 프롬프트 안 뜸.
 
 ---
 

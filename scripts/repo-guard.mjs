@@ -34,21 +34,10 @@ if (exists("package.json")) {
   if (banned.length) fail(`PWA 의존성 금지 위반: ${banned.join(", ")}`);
 }
 
-// 3) manifest 검사: display: "browser" 필수 (standalone/fullscreen/minimal-ui 금지)
-const manifestPath = "public/manifest.json";
-if (exists(manifestPath)) {
-  const manifest = JSON.parse(read(manifestPath));
-  if (manifest.display && manifest.display !== "browser") {
-    fail(`manifest.json display는 "browser"만 허용 (현재: "${manifest.display}")`);
-  }
-  if (!manifest.display) {
-    fail(`manifest.json에 display: "browser" 필수`);
-  }
-}
-
-// 4) service worker 파일 금지
+// 3) manifest / sw 파일 금지
 const bannedPaths = [
   "public/manifest.webmanifest",
+  "public/manifest.json",
   "public/sw.js",
   "src/sw.js",
   "src/sw.ts",
@@ -60,13 +49,13 @@ for (const p of bannedPaths) {
   if (exists(p)) fail(`PWA 파일 금지 위반: ${p}`);
 }
 
-// 5) index.html 에 manifest 링크 필수 (display:browser 조건부)
-if (exists(manifestPath) && exists("index.html")) {
+// 4) index.html 에 manifest 링크 금지
+if (exists("index.html")) {
   const html = read("index.html");
-  if (!html.includes('rel="manifest"')) fail(`manifest.json 있으면 index.html에 link 필수`);
+  if (html.includes('rel="manifest"')) fail(`index.html에 manifest link 금지 위반`);
 }
 
-// 6) SW 등록 코드 패턴 금지(간단 탐지)
+// 5) SW 등록 코드 패턴 금지(간단 탐지)
 const scanTargets = ["src/main.jsx", "src/main.tsx", "src/main.js", "src/main.ts"];
 for (const p of scanTargets) {
   if (!exists(p)) continue;
@@ -76,7 +65,7 @@ for (const p of scanTargets) {
   }
 }
 
-// 7) 콘텐츠 폴더 존재 확인
+// 6) 콘텐츠 폴더 존재 확인
 if (!exists("src/content")) fail("src/content 폴더 없음 (콘텐츠 작업 폴더는 필수)");
 
 console.log("\n[REPO-GUARD] ✅ OK (rules satisfied)\n");
