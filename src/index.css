@@ -14,7 +14,84 @@
   }
 }
 
-/* PARKSY WORLD Chalkboard Global Theme */
+/* ===========================================
+   PARKSY DESIGN TOKENS (절대 불변)
+   Part 컴포넌트는 이 토큰만 참조
+   컴포넌트에서 색상 직접 지정 금지!
+   =========================================== */
+
+:root {
+  /* Part1 - Grandpa Mode (Chalk) */
+  --part1-bg-from: rgba(37, 58, 47, 0.6);
+  --part1-bg-to: rgba(30, 45, 38, 0.4);
+  --part1-border: #E6F2E8;
+  --part1-title: #F7FFF5;
+  --part1-heading: #E6F2E8;
+  --part1-strong: #F7FFF5;
+  --part1-link: #E6F2E8;
+
+  /* Part2 - System Architect (Chalk) */
+  --part2-bg-from: rgba(37, 58, 47, 0.6);
+  --part2-bg-to: rgba(30, 45, 38, 0.4);
+  --part2-border: #E6F2E8;
+  --part2-title: #F7FFF5;
+  --part2-heading: #E6F2E8;
+  --part2-strong: #F7FFF5;
+  --part2-link: #E6F2E8;
+
+  /* Part3 - Theory Map (Chalk) */
+  --part3-bg-from: rgba(37, 58, 47, 0.6);
+  --part3-bg-to: rgba(30, 45, 38, 0.4);
+  --part3-border: #E6F2E8;
+  --part3-title: #F7FFF5;
+  --part3-heading: #E6F2E8;
+  --part3-strong: #F7FFF5;
+  --part3-link: #E6F2E8;
+
+  /* Common Part styles */
+  --part-text: #e2e8f0;
+  --part-text-muted: #cbd5e1;
+  --part-radius: 1rem;
+  --part-padding: 2rem;
+}
+
+/* Part1 styling from tokens */
+.part1-grandpa-mode {
+  background: linear-gradient(to bottom right, var(--part1-bg-from), var(--part1-bg-to));
+  border-left: 4px solid var(--part1-border);
+  border-radius: var(--part-radius);
+  padding: var(--part-padding);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+}
+.part1-grandpa-mode .part-title { color: var(--part1-title); }
+
+/* Part2 styling from tokens */
+.part2-system-architect {
+  background: linear-gradient(to bottom right, var(--part2-bg-from), var(--part2-bg-to));
+  border-left: 4px solid var(--part2-border);
+  border-radius: var(--part-radius);
+  padding: var(--part-padding);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+}
+.part2-system-architect .part-title { color: var(--part2-title); }
+
+/* Part3 styling from tokens */
+.part3-theory-map {
+  background: linear-gradient(to bottom right, var(--part3-bg-from), var(--part3-bg-to));
+  border-left: 4px solid var(--part3-border);
+  border-radius: var(--part-radius);
+  padding: var(--part-padding);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+}
+.part3-theory-map .part-title { color: var(--part3-title); }
+
+/* ===========================================
+   PARKSY WORLD Chalkboard Global Theme
+   =========================================== */
+
 :root {
   /* 1. Core Base – 네가 사랑한 원조 초록 */
   --parksy-chalk-base: #253A2F;
@@ -153,6 +230,29 @@ body:hover .parksy-cursor-dust {
   color: rgba(255,255,255,0.25) !important;
 }
 
+/* Part components use prose-invert - override base prose color */
+.prose-invert {
+  color: #e2e8f0 !important; /* slate-200 */
+}
+
+/* Table styling inside Parts (dark theme) */
+.prose-invert table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.prose-invert th,
+.prose-invert td {
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  padding: 0.5rem 1rem;
+  color: #e2e8f0 !important;
+}
+
+.prose-invert th {
+  background-color: rgba(255, 255, 255, 0.05);
+  font-weight: 600;
+}
+
 /* 코드나 인라인 강조는 살짝 강하게 */
 .mdx-content code {
   color: var(--chalk-fg-strong);
@@ -188,12 +288,18 @@ body:hover .parksy-cursor-dust {
 
 /* Mermaid 공통 래퍼 – 칠판 위 초크 느낌 */
 .mermaid-chalk svg {
-  width: 100%;
+  width: auto;
   height: auto;
-  max-width: 640px;
+  max-width: 100%;
+  min-width: 300px;
   margin: 0 auto;
   font-family: "Annie Use Your Telescope", "Courier New", monospace;
   color: #F7FFF5;
+}
+
+.mermaid-wrapper {
+  overflow-x: auto;
+  padding: 1rem 0;
 }
 
 /* Remove tap highlight overlay (blue box on mobile) */
@@ -219,7 +325,8 @@ svg, svg * {
 .mermaid-chalk .node text,
 .mermaid-chalk text {
   fill: #F7FFF5 !important;
-  font-size: 0.8rem;
+  font-size: max(0.9rem, 14px) !important;
+  font-weight: 500;
 }
 
 /* 엣지(화살표) - 초크로 긋는 선 느낌 */
@@ -287,9 +394,9 @@ svg, svg * {
   .mermaid-chalk .node text {
     font-size: 0.75rem;
   }
-  
+
   .mermaid-chalk svg {
-    max-width: 100%;
+    min-width: 280px;
   }
 }
 
